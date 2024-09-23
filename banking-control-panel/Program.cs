@@ -1,6 +1,12 @@
 var builder = WebApplication.CreateBuilder(args);
 
 
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IClientRepo, ClientRepo>();
+builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<PasswordHasher<User>>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCustomJwt(builder.Configuration);
