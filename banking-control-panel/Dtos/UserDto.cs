@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using banking_control_panel.Models;
 
 namespace banking_control_panel.Dtos.UserDto;
 
@@ -11,7 +12,7 @@ public class ReadUserDto
 public class CreateUserDto
 {
     public string Username { get; set; }
-    public string Role { get; set; }
+    public UserRoles Role { get; set; }
     public string Password { get; set; }
 }
 
