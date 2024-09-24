@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using banking_control_panel.Dtos.UserDto;
 
 namespace banking_control_panel.Data;
 
@@ -30,7 +31,7 @@ public interface IRepository<T>
     /// <returns>
     ///    A paged result of entities wrapped <see cref="PagedResult{T}">PagedResult</see>
     /// </returns>
-    Task<PagedResult<T>> GetAllPagedAsync(int pageIndex, int pageSize);
+    Task<PagedResult<T>> GetAllPagedAsync(QueryDto query, int pageIndex, int pageSize);
 
     /// <summary>
     ///   Get all entities with pagination support and sorting
@@ -74,10 +75,12 @@ public interface IRepository<T>
     /// <param name="condition">
     ///    The condition to be satisfied
     /// </param>
+    /// <param name="pageIndex"></param>
+    /// <param name="pageSize"></param>
     /// <returns>
     ///   A list of entities that satisfy the condition
     /// </returns>
-    Task<List<T>> GetAllWhereAsync(Expression<Func<T, bool>> condition);
+    Task<PagedResult<T>> GetAllWhereAsync(Expression<Func<T, bool>> condition, int pageIndex, int pageSize);
 
     
     /// <summary>
