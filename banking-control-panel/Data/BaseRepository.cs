@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using banking_control_panel.Dtos.UserDto;
 using Microsoft.EntityFrameworkCore;
 
 namespace banking_control_panel.Data;
@@ -40,7 +41,7 @@ public class BaseRepository<T>(AppDbContext context) : IRepository<T>
     }
 
     /// <inheritdoc />
-    public async Task<PagedResult<T>> GetAllPagedAsync(int pageIndex, int pageSize)
+    public virtual async Task<PagedResult<T>> GetAllPagedAsync(QueryDto query, int pageIndex, int pageSize)
     {
         var items = await context.Set<T>().Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
         var count = await context.Set<T>().CountAsync();
@@ -69,10 +70,11 @@ public class BaseRepository<T>(AppDbContext context) : IRepository<T>
 
 
     /// <inheritdoc />
-    public async Task<List<T>> GetAllWhereAsync(Expression<Func<T, bool>> condition)
+    public async Task<PagedResult<T>> GetAllWhereAsync(Expression<Func<T, bool>> condition, int pageIndex, int pageSize)
     {
-        var items = await context.Set<T>().Where(condition).ToListAsync();
-        return items;
+        var items = await context.Set<T>().Where(condition).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+        var count = await context.Set<T>().Where(condition).CountAsync();
+        return new PagedResult<T>(items, count, pageIndex, pageSize);
     }
 
     /// <inheritdoc />
