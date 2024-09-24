@@ -7,5 +7,5 @@ public interface IUserService
 {
     Task<ReadUserDto> RegisterAsync(CreateUserDto user);
     Task<string> LoginAsync(LoginDto login);
-    Task<ReadUserDto> GetById(Guid id);
+    Task<ReadUserDto> GetByIdAsync(Guid id);
 }
