@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace banking_control_panel.Models;
 
-public class Client
+public class Client: BaseModel
 {
     public Guid Id { get; set; }
     [EmailAddress]
