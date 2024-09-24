@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using banking_control_panel.Exceptions;
 using Microsoft.IdentityModel.Tokens;
 
 namespace banking_control_panel.Services.UserServices;
@@ -15,15 +16,14 @@ public class UserService(IUserRepo _userRepo, PasswordHasher<User> _hasher, ICon
 {
     public async Task<ReadUserDto> RegisterAsync(CreateUserDto user)
     {
-        if(!Enum.TryParse(user.Role, true, out UserRoles role))
+        if(!Enum.IsDefined(typeof(UserRoles), user.Role))
         {
             throw new ValidationException();
         }
-
         User userObj = new()
         {
             Username = user.Username,
-            Role = role,
+            Role = user.Role,
         };
         userObj.Password = _hasher.HashPassword(userObj, user.Password);
 
@@ -53,9 +53,13 @@ public class UserService(IUserRepo _userRepo, PasswordHasher<User> _hasher, ICon
         throw new UnauthorizedAccessException();
     }
 
-    public async Task<ReadUserDto> GetById(Guid id)
+    public async Task<ReadUserDto> GetByIdAsync(Guid id)
     {
         var result = await _userRepo.GetByIdAsync(id);
+        if (result == null)
+        {
+            throw new NotFoundException();
+        }
         return _mapper.Map<ReadUserDto>(result);
     }
 
