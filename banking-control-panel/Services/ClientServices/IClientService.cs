@@ -7,6 +7,6 @@ namespace banking_control_panel.Services.ClientServices;
 public interface IClientService
 {
     Task<ReadClientDto> AddAsync(CreateClientDto createClient);
-    Task<Client> GetByIdAsync(Guid id);
-    Task<PagedResultDto<ReadClientDto>> GetAll();
+    Task<ReadClientDto> GetByIdAsync(Guid id);
+    Task<PagedResultDto<ReadClientDto>> GetAll(Guid userId, QueryDto query, int pageIndex = 1, int pageSize = 10);
 }
