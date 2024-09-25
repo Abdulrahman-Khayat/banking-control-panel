@@ -10,7 +10,7 @@ public class AccountProfile: Profile
     public AccountProfile()
     {
         CreateMap<Account, ReadAccountDto>();
-        // CreateMap<PagedResult<Account>, PagedResult<ReadAccountDto>>();
         CreateMap<CreateAccountDto, Account>();
+        CreateMap<CreateAccountFromClientDto, Account>();
     }
 }
