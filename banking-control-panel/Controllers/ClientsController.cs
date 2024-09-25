@@ -37,7 +37,6 @@ public class ClientsController(IClientService _clientService, ILogger<Client> _l
         }
     }
     
-    
     [HttpGet()]
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<PagedResultDto<ReadClientDto>>> GetAll([FromQuery] QueryDto query, [FromQuery] int pageIndex = 1, [FromQuery] int pageSize = 10)
@@ -71,20 +70,26 @@ public class ClientsController(IClientService _clientService, ILogger<Client> _l
             if (e.Message == Errors.INVALID_SEX)
             {
                 ModelState.AddModelError("Sex", "Invalid sex type [0: male, 1: female]");
+                _logger.LogInformation("Invalid sex type [0: male, 1: female]");
+
             }
             else if (e.Message == Errors.DUPLICATE_EMAIL)
             {
                 ModelState.AddModelError("Email", "Email already exists");
+                _logger.LogInformation("Email already exists");
+
             }
             else if (e.Message == Errors.DUPLICATE_MOBILE)
             {
                 ModelState.AddModelError("MobileNumber", "MobileNumber already exists");
+                _logger.LogInformation("MobileNumber already exists");
             }
 
             return ValidationProblem();
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            _logger.LogError(e.Message);
             return Problem();
         }
         
