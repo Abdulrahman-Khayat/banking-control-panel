@@ -33,7 +33,7 @@ public class CreateClientDto
     public string MobileNumber { get; set; }
     public SexTypes Sex { get; set; }
     public CreateAddressDto Address { get; set; }
-    public IList<CreateAccountDto>? Accounts { get; set; }
+    public IList<CreateAccountFromClientDto>? Accounts { get; set; }
 }
 
 public class QueryDto
