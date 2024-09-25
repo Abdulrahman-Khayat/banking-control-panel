@@ -20,6 +20,10 @@ public class UserService(IUserRepo _userRepo, PasswordHasher<User> _hasher, ICon
         {
             throw new ValidationException();
         }
+        if (await _userRepo.GetFirstWhereAsync(c => c.Username == user.Username) != null)
+        {
+            throw new ValidationException(Errors.DUPLICATE_USERNAME);
+        }
         User userObj = new()
         {
             Username = user.Username,
