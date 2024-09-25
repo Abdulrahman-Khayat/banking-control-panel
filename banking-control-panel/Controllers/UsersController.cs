@@ -47,7 +47,11 @@ public class UsersController(IUserService _userService, ILogger<User> _logger): 
                 ModelState.AddModelError("role", "Invalid role type [0: admin, 1: user]");
                 _logger.LogInformation("Invalid role type [0: admin, 1: user]");
             }
-
+            else if (e.Message == Errors.DUPLICATE_USERNAME)
+            {
+                ModelState.AddModelError("username", "Username already exists");
+                _logger.LogInformation("Username already exists");
+            }
             return ValidationProblem();
         }
         catch (Exception e)
