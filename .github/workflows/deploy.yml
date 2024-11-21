@@ -34,4 +34,4 @@ jobs:
           context: .
           file: ./banking-control-panel/Dockerfile
           push: true # Set to false if you don't want to push the image
-          tags: http://98.85.182.143:5005/banking:latest
+          tags: 98.85.182.143:5005/banking:latest
