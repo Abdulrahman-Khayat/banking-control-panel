@@ -18,7 +18,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
-          registry: 98.85.182.143:5005
+          registry: http://98.85.182.143:5005
              
       # Log in to Docker Hub (if you need to push the image)
       # - name: Log in to Docker Hub
@@ -34,4 +34,4 @@ jobs:
           context: .
           file: ./banking-control-panel/Dockerfile
           push: true # Set to false if you don't want to push the image
-          tags: 98.85.182.143:5005/banking:latest
+          tags: http://98.85.182.143:5005/banking:latest
